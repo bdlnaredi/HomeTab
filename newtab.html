@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>New Tab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <div id="clock" class="clock"></div>
+      <div id="date" class="date"></div>
+    </div>
+    <div class="actions">
+      <button id="editBtn" class="btn" type="button" title="Add, change or remove apps">✎ Edit</button>
+      <button id="settingsBtn" class="btn" type="button" title="Settings">⚙ Settings</button>
+    </div>
+  </header>
+
+  <main>
+    <form id="searchForm" class="search">
+      <input id="q" type="search" placeholder="Search the web" autocomplete="off" autofocus>
+      <button type="submit" class="btn primary">Search</button>
+    </form>
+
+    <div id="banner" class="banner" hidden>
+      Set your server's IP address in <button id="bannerSettings" type="button" class="link">Settings</button> so the app links work.
+    </div>
+
+    <div id="groups"></div>
+
+    <div class="edit-only edit-bar">
+      <button id="addGroupBtn" class="btn" type="button">+ Add group</button>
+      <button id="doneBtn" class="btn primary" type="button">Done editing</button>
+    </div>
+  </main>
+
+  <!-- Add / edit app -->
+  <dialog id="appDialog">
+    <form id="appForm" method="dialog">
+      <h3 id="appTitle">Add app</h3>
+      <label>Name
+        <input id="appName" required maxlength="40" placeholder="Sonarr">
+      </label>
+      <label>Address
+        <input id="appUrl" required placeholder="http://{server}:8989 or https://site.example.com">
+        <small>Type <code>{server}</code> to use the server IP from Settings.</small>
+      </label>
+      <label>Icon picture address (optional)
+        <input id="appIcon" placeholder="https://…/icon.png">
+      </label>
+      <label>Group
+        <select id="appGroup"></select>
+      </label>
+      <div class="row">
+        <button id="appDelete" type="button" class="btn danger">Delete</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Add / rename group -->
+  <dialog id="groupDialog">
+    <form id="groupForm" method="dialog">
+      <h3 id="groupTitle">Add group</h3>
+      <label>Group name
+        <input id="groupName" required maxlength="40" placeholder="Media">
+      </label>
+      <div class="row">
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Settings -->
+  <dialog id="settingsDialog">
+    <form id="settingsForm" method="dialog">
+      <h3>Settings</h3>
+      <label>Server IP address
+        <input id="setServer" placeholder="192.168.1.10">
+        <small>Your Unraid server's local IP (or Tailscale IP). Used wherever a link says <code>{server}</code>.</small>
+      </label>
+      <label>Your name (optional)
+        <input id="setName" maxlength="30" placeholder="for the greeting">
+      </label>
+      <label>Search engine
+        <select id="setSearch">
+          <option value="brave">Brave Search</option>
+          <option value="ddg">DuckDuckGo</option>
+          <option value="startpage">Startpage</option>
+        </select>
+      </label>
+      <label class="check">
+        <input id="setStatus" type="checkbox">
+        Show online / offline dots on tiles
+      </label>
+      <small class="note">Brave will ask permission the first time. It is only used to check whether your apps are reachable.</small>
+
+      <div class="row wrap">
+        <button id="exportBtn" type="button" class="btn">Back up (export)</button>
+        <label class="btn file">Restore (import)
+          <input id="importFile" type="file" accept="application/json,.json" hidden>
+        </label>
+        <button id="resetBtn" type="button" class="btn danger">Reset to defaults</button>
+      </div>
+      <div class="row">
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
